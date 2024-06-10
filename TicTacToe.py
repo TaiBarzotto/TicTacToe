@@ -1,3 +1,5 @@
+#para jogar instale a biblioteca turtle
+
 import turtle
 import random
 
@@ -49,9 +51,9 @@ disponiveis=[1,2,3,4,5,6,7,8,9]
 
 
 #função para imprimir a jogada de um player
-def jogador():
+def jogador_A():
     
-    jogada=turtle.textinput("Sua vez", "Qual sua jogada? digite um numero de 1 a 9")
+    jogada=turtle.textinput("Vez do jogador X", "Qual sua jogada? digite um numero de 1 a 9")
     jogada=int(jogada)
 
     while 1>jogada or jogada>9:
@@ -114,10 +116,64 @@ def jogador():
     t.goto(0,-50)
 
     
-                
+def jogador_B():
+    
+    jogada=turtle.textinput("Vez do jogador O", "Qual sua jogada? digite um numero de 1 a 9")
+    jogada=int(jogada)
 
+    while 1>jogada or jogada>9:
+        jogada=turtle.textinput("Número inválido", "Digite um numero de 1 a 9")
+        jogada=int(jogada)
 
-def maquina():
+    if jogada not in disponiveis:
+        jogada=turtle.textinput("Número repetido", "Digite outro numero de 1 a 9")
+        jogada=int(jogada)
+
+    if jogada<=3:
+        matriz_jogo[0][jogada-1]=1
+        if jogada==1:
+            t.goto(-100,20)
+            disponiveis.remove(jogada)
+        elif jogada==2:
+            t.goto(0,20)
+            disponiveis.remove(jogada)
+        elif jogada==3:
+            t.goto(100,20)
+            disponiveis.remove(jogada)
+
+    elif 4<=jogada<=6:
+        matriz_jogo[1][jogada-4]=1
+        if jogada==4:
+            t.goto(-100,-80)
+            disponiveis.remove(jogada)
+        elif jogada==5:
+            t.goto(0,-80)
+            disponiveis.remove(jogada)
+        elif jogada==6:
+            t.goto(100,-80)
+            disponiveis.remove(jogada)
+
+    elif 7<=jogada<=9:
+        matriz_jogo[2][jogada-7]=1
+        if jogada==7:
+            t.goto(-100,-180)
+            disponiveis.remove(jogada)
+        elif jogada==8:
+            t.goto(0,-180)
+            disponiveis.remove(jogada)
+        elif jogada==9:
+            t.goto(100,-180)
+            disponiveis.remove(jogada)
+
+    t.pencolor("blue")
+    t.pensize(5)
+    t.pendown()
+    t.right(90)
+    t.circle(30)
+    t.penup()
+    t.left(90)
+
+def maquina(): #Para o jogador jogar contra a maquina
 
     idx=random.randint(0,(len(disponiveis)-1))
     place=disponiveis[idx]
@@ -171,10 +227,8 @@ def maquina():
 
 while len(disponiveis)>0 or vitoria==False:
     vitoria=False 
-    jogador()
+    jogador_A()
 
-    print(disponiveis)
-    print(matriz_jogo)
     #conferindo vitoria
     if len(disponiveis)<=4: #checando a partir da terceira rodada, ja foram 3 jogadas do player e duas da maquina
         #linha fechada
@@ -204,11 +258,11 @@ while len(disponiveis)>0 or vitoria==False:
     if vitoria==True:
         t.goto(-10,0)
 
-        t.write("VOCÊ VENCEU", align="center", font=("Verdana",15, "normal"))
+        t.write("JOGADOR X VENCEU", align="center", font=("Verdana",15, "normal"))
 
         break
 
-    o=maquina()    
+    jogador_B()    
     #conferindo vitoria
     if len(disponiveis)<=4: #checando a partir da terceira rodada, ja foram 3 jogadas do player e duas da maquina
         #linha fechada
@@ -237,7 +291,7 @@ while len(disponiveis)>0 or vitoria==False:
 
     if vitoria==True:
         t.goto(0,0)
-        t.write("VOCÊ PERDEU",align="center", font=("Verdana",15, "normal"))
+        t.write("JOGADOR O VENCEU",align="center", font=("Verdana",15, "normal"))
         break
 
 turtle.mainloop()
