@@ -1,42 +1,29 @@
 import turtle
 import random
 
-
-t=turtle.Turtle()
+t=turtle.Screen()
 #velocidade de criação do #
-t.speed(10)#2° mais rapido possivel
+turtle.speed(10)#2° mais rapido possivel
 
 #cor do #
-#t.shape("blank")
+#turtle.shape("blank")
 
-#titulo da pagina
-turtle.title("Jogo da velha")
 #criando o #
-t.goto(0,0)
-t.forward(150)
-t.backward(300) 
-t.forward(100)
-t.right(90)
-t.backward(100)
-t.forward(300)
-t.backward(100)
-t.left(90)
-t.backward(100)
-t.forward(300)
-t.backward(100)
-t.left(90)
-t.backward(100)
-t.forward(300)
-t.penup()
-
-#titulo explicativo
-
-t.goto(0,250)
-t.write("JOGO DA VELHA", align="center", font=("Verdana",20, "normal"))
-t.goto(0,230)
-t.write("Escolha uma jogada de acordo com as seguintes posições:", align="center", font=("Verdana",10, "normal"))
-t.goto(0,140)
-t.write(" 1 | 2 | 3  \n ________ \n 4 | 5 | 6  \n ________ \n 7 | 8 | 9", align="center", font=("Verdana",10, "normal"))
+turtle.forward(150)
+turtle.backward(300) 
+turtle.forward(100)
+turtle.right(90)
+turtle.backward(100)
+turtle.forward(300)
+turtle.backward(100)
+turtle.left(90)
+turtle.backward(100)
+turtle.forward(300)
+turtle.backward(100)
+turtle.left(90)
+turtle.backward(100)
+turtle.forward(300)
+turtle.penup()
 #jogo em si
 
 #matriz que servirá para acompanhar o andamento do jogo
@@ -48,75 +35,77 @@ matriz_jogo=[[0,0,0],
 disponiveis=[1,2,3,4,5,6,7,8,9]
 
 
+  
+# method to perform action 
+  
+  
+# onclick action  
+
+
+
 #função para imprimir a jogada de um player
-def jogador():
-    
-    jogada=turtle.textinput("Sua vez", "Qual sua jogada? digite um numero de 1 a 9")
-    jogada=int(jogada)
+def jogador(x,y):
+    turtle.goto(x, y)
+    turtle.write(str(x)+","+str(y)) 
+    if y>0:
+        if x<-50:
+            turtle.goto(-130,20)
+            matriz_jogo[0][0]=2
+            disponiveis.remove(1)
+        elif x>-50 and x<50:
+            turtle.goto(-30,20)
+            matriz_jogo[0][1]=2
+            disponiveis.remove(2)
+        elif x>50:
+            turtle.goto(70,20)
+            matriz_jogo[0][2]=2
+            disponiveis.remove(3)
 
-    while 1>jogada or jogada>9:
-        jogada=turtle.textinput("Número inválido", "Digite um numero de 1 a 9")
-        jogada=int(jogada)
+    elif y<0 and y>-100:
+        if x<-50:
+            turtle.goto(-130,-80)
+            matriz_jogo[1][0]=2
+            disponiveis.remove(4)
+        elif x>-50 and x<50:
+            turtle.goto(-30,-80)
+            matriz_jogo[1][1]=2
+            disponiveis.remove(5)
+        elif x>50:
+            turtle.goto(70,-80)
+            matriz_jogo[1][2]=2
+            disponiveis.remove(6)
 
-    if jogada not in disponiveis:
-        jogada=turtle.textinput("Número repetido", "Digite outro numero de 1 a 9")
-        jogada=int(jogada)
+    elif y<-100:
+        if x<-50:
+            turtle.goto(-130,-180)
+            matriz_jogo[2][0]=2
+            disponiveis.remove(7)
+        elif x>-50 and x<50:
+            turtle.goto(-30,-180)
+            matriz_jogo[2][1]=2
+            disponiveis.remove(8)
+        elif x>50:
+            turtle.goto(70,-180)
+            matriz_jogo[2][2]=2
+            disponiveis.remove(9)
 
-    if jogada<=3:
-        matriz_jogo[0][jogada-1]=2
-        if jogada==1:
-            t.goto(-130,20)
-            disponiveis.remove(jogada)
-        elif jogada==2:
-            t.goto(-30,20)
-            disponiveis.remove(jogada)
-        elif jogada==3:
-            t.goto(70,20)
-            disponiveis.remove(jogada)
-
-    elif 4<=jogada<=6:
-        matriz_jogo[1][jogada-4]=2
-        if jogada==4:
-            t.goto(-130,-80)
-            disponiveis.remove(jogada)
-        elif jogada==5:
-            t.goto(-30,-80)
-            disponiveis.remove(jogada)
-        elif jogada==6:
-            t.goto(70,-80)
-            disponiveis.remove(jogada)
-
-    elif 7<=jogada<=9:
-        matriz_jogo[2][jogada-7]=2
-        if jogada==7:
-            t.goto(-130,-180)
-            disponiveis.remove(jogada)
-        elif jogada==8:
-            t.goto(-30,-180)
-            disponiveis.remove(jogada)
-        elif jogada==9:
-            t.goto(70,-180)
-            disponiveis.remove(jogada)
-
-    t.pencolor("red")
-    t.pensize(5)
-    t.pendown()
-    t.right(45)
-    t.forward(84)
-    t.penup()
-    t.left(45)
-    t.backward(60)
-    t.left(45)
-    t.pendown()
-    t.forward(84)
-    t.right(45)
-    t.penup()
-    t.goto(0,-50)
-
-    
-                
+    turtle.pencolor("red")
+    turtle.pensize(5)
+    turtle.pendown()
+    turtle.right(45)
+    turtle.forward(84)
+    turtle.penup()
+    turtle.left(45)
+    turtle.backward(60)
+    turtle.left(45)
+    turtle.pendown()
+    turtle.forward(84)
+    turtle.right(45)
+    turtle.penup()
+    turtle.goto(0,-50)
 
 
+             
 def maquina():
 
     idx=random.randint(0,(len(disponiveis)-1))
@@ -125,56 +114,59 @@ def maquina():
     if place<=3:
         matriz_jogo[0][place-1]=1
         if place==1:
-            t.goto(-100,20)
+            turtle.goto(-100,20)
             disponiveis.remove(place)
         elif place==2:
-            t.goto(0,20)
+            turtle.goto(0,20)
             disponiveis.remove(place)
         elif place==3:
-            t.goto(100,20)
+            turtle.goto(100,20)
             disponiveis.remove(place)
 
     elif 4<=place<=6:
         matriz_jogo[1][place-4]=1
         if place==4:
-            t.goto(-100,-80)
+            turtle.goto(-100,-80)
             disponiveis.remove(place)
         elif place==5:
-            t.goto(0,-80)
+            turtle.goto(0,-80)
             disponiveis.remove(place)
         elif place==6:
-            t.goto(100,-80)
+            turtle.goto(100,-80)
             disponiveis.remove(place)
 
     elif 7<=place<=9:
         matriz_jogo[2][place-7]=1
         if place==7:
-            t.goto(-100,-180)
+            turtle.goto(-100,-180)
             disponiveis.remove(place)
         elif place==8:
-            t.goto(0,-180)
+            turtle.goto(0,-180)
             disponiveis.remove(place)
         elif place==9:
-            t.goto(100,-180)
+            turtle.goto(100,-180)
             disponiveis.remove(place)
     
-    t.pencolor("blue")
-    t.pensize(5)
-    t.pendown()
-    t.right(90)
-    t.circle(30)
-    t.penup()
-    t.left(90)
+    turtle.pencolor("blue")
+    turtle.pensize(5)
+    turtle.pendown()
+    turtle.right(90)
+    turtle.circle(30)
+    turtle.penup()
+    turtle.left(90)
     
 
 
+t.onclick(jogador)
 
+'''
 while len(disponiveis)>0 or vitoria==False:
     vitoria=False 
-    jogador()
+   
 
     print(disponiveis)
     print(matriz_jogo)
+    
     #conferindo vitoria
     if len(disponiveis)<=4: #checando a partir da terceira rodada, ja foram 3 jogadas do player e duas da maquina
         #linha fechada
@@ -202,13 +194,13 @@ while len(disponiveis)>0 or vitoria==False:
             vitoria=True
 
     if vitoria==True:
-        t.goto(-10,0)
+        turtle.goto(-10,0)
 
-        t.write("VOCÊ VENCEU", align="center", font=("Verdana",15, "normal"))
+        turtle.write("VOCÊ VENCEU", font=("Verdana",15, "normal"))
 
         break
 
-    o=maquina()    
+    #o=maquina()    
     #conferindo vitoria
     if len(disponiveis)<=4: #checando a partir da terceira rodada, ja foram 3 jogadas do player e duas da maquina
         #linha fechada
@@ -236,8 +228,8 @@ while len(disponiveis)>0 or vitoria==False:
             vitoria=True
 
     if vitoria==True:
-        t.goto(0,0)
-        t.write("VOCÊ PERDEU", font=("Verdana",15, "normal"))
+        turtle.goto(0,0)
+        turtle.write("VOCÊ PERDEU", font=("Verdana",15, "normal"))
         break
-
+'''
 turtle.mainloop()
