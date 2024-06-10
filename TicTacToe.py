@@ -7,7 +7,7 @@ t=turtle.Turtle()
 t.speed(10)#2° mais rapido possivel
 
 #cor do #
-#t.shape("blank")
+t.shape("blank")
 
 #titulo da pagina
 turtle.title("Jogo da velha")
@@ -237,7 +237,7 @@ while len(disponiveis)>0 or vitoria==False:
 
     if vitoria==True:
         t.goto(0,0)
-        t.write("VOCÊ PERDEU", font=("Verdana",15, "normal"))
+        t.write("VOCÊ PERDEU",align="center", font=("Verdana",15, "normal"))
         break
 
 turtle.mainloop()
