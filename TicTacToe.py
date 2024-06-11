@@ -2,7 +2,6 @@
 # para instalar a biblioteca digite: pip install PythonTurtle
 
 import turtle
-import random
 
 t=turtle.Turtle()
 s=turtle.Screen()
