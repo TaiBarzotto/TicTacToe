@@ -223,6 +223,7 @@ while True:
     #Caso de dar empate
     if len(disponiveis)==0:
         t.goto(0,105)
+        t.pencolor("#3f0013")
         t.write("DEU VELHA",align="center", font=("Times New Roman",15, "normal"))
         break
 
@@ -231,7 +232,6 @@ while True:
     vencedorB=verificarVitoria()
     if vencedorB==True:
         t.goto(0,105)
-        t.pencolor("#3f0013")
         t.write("JOGADOR O VENCEU", align="center", font=("Times New Roman",15, "normal"))
         break
     
