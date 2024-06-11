@@ -1,10 +1,12 @@
 #para jogar instale a biblioteca turtle
+# para instalar a biblioteca digite: pip install PythonTurtle
 
 import turtle
 import random
 
-
 t=turtle.Turtle()
+s=turtle.Screen()
+
 #velocidade de criação do #
 t.speed(10)#2° mais rapido possivel
 
@@ -13,7 +15,11 @@ t.shape("blank")
 
 #titulo da pagina
 turtle.title("Jogo da velha")
+
 #criando o #
+turtle.bgcolor("#f7e9de")
+t.pencolor("#3f0013")
+
 t.goto(0,0)
 t.forward(150)
 t.backward(300) 
@@ -32,21 +38,21 @@ t.forward(300)
 t.penup()
 
 #titulo explicativo
-
 t.goto(0,250)
-t.write("JOGO DA VELHA", align="center", font=("Verdana",20, "normal"))
+t.write("JOGO DA VELHA", align="center", font=("Times New Roman",20, "normal"))
 t.goto(0,230)
-t.write("Escolha uma jogada de acordo com as seguintes posições:", align="center", font=("Verdana",10, "normal"))
+t.write("Escolha uma jogada de acordo com as seguintes posições:", align="center", font=("Times New Roman",10, "normal"))
 t.goto(0,140)
-t.write(" 1 | 2 | 3  \n ________ \n 4 | 5 | 6  \n ________ \n 7 | 8 | 9", align="center", font=("Verdana",10, "normal"))
-#jogo em si
+t.write(" 1 | 2 | 3  \n _______ \n 4 | 5 | 6  \n _______ \n 7 | 8 | 9", align="center", font=("Arial",10, "normal"))
+
+#JOGO
 
 #matriz que servirá para acompanhar o andamento do jogo
 matriz_jogo=[[0,0,0],
              [0,0,0],
              [0,0,0]]
 
-#lista de jogadas disponiveis
+#lista com as jogadas disponiveis
 disponiveis=[1,2,3,4,5,6,7,8,9]
 
 
@@ -99,8 +105,9 @@ def jogador_A():
         elif jogada==9:
             t.goto(70,-180)
             disponiveis.remove(jogada)
-
-    t.pencolor("red")
+    
+    #desenhar o "X"
+    t.pencolor("#ea785b")
     t.pensize(5)
     t.pendown()
     t.right(45)
@@ -165,56 +172,9 @@ def jogador_B():
             t.goto(100,-180)
             disponiveis.remove(jogada)
 
-    t.pencolor("blue")
-    t.pensize(5)
-    t.pendown()
-    t.right(90)
-    t.circle(30)
-    t.penup()
-    t.left(90)
-
-def maquina(): #Para o jogador jogar contra a maquina
-
-    idx=random.randint(0,(len(disponiveis)-1))
-    place=disponiveis[idx]
-
-    if place<=3:
-        matriz_jogo[0][place-1]=1
-        if place==1:
-            t.goto(-100,20)
-            disponiveis.remove(place)
-        elif place==2:
-            t.goto(0,20)
-            disponiveis.remove(place)
-        elif place==3:
-            t.goto(100,20)
-            disponiveis.remove(place)
-
-    elif 4<=place<=6:
-        matriz_jogo[1][place-4]=1
-        if place==4:
-            t.goto(-100,-80)
-            disponiveis.remove(place)
-        elif place==5:
-            t.goto(0,-80)
-            disponiveis.remove(place)
-        elif place==6:
-            t.goto(100,-80)
-            disponiveis.remove(place)
-
-    elif 7<=place<=9:
-        matriz_jogo[2][place-7]=1
-        if place==7:
-            t.goto(-100,-180)
-            disponiveis.remove(place)
-        elif place==8:
-            t.goto(0,-180)
-            disponiveis.remove(place)
-        elif place==9:
-            t.goto(100,-180)
-            disponiveis.remove(place)
-    
-    t.pencolor("blue")
+    #desenhar a "O"
+    t.pencolor("#a1a8be")
+    t.speed(10)
     t.pensize(5)
     t.pendown()
     t.right(90)
@@ -222,76 +182,58 @@ def maquina(): #Para o jogador jogar contra a maquina
     t.penup()
     t.left(90)
     
+def verificarVitoria():
+        vitoria=False
+        #linha fechada    
+        if matriz_jogo[0][0]==matriz_jogo[0][1] and matriz_jogo[0][0]==matriz_jogo[0][2] and matriz_jogo[0][0]!=0:
+            vitoria=True
+        elif matriz_jogo[1][0]==matriz_jogo[1][1] and matriz_jogo[1][0]==matriz_jogo[1][2] and matriz_jogo[1][0]!=0:
+            vitoria=True
+        elif matriz_jogo[2][0]==matriz_jogo[2][1] and matriz_jogo[2][0]==matriz_jogo[2][2] and matriz_jogo[2][0]!=0:
+            vitoria=True
 
-
-
-while len(disponiveis)>0 or vitoria==False:
-    vitoria=False 
-    jogador_A()
-
-    #conferindo vitoria
-    if len(disponiveis)<=4: #checando a partir da terceira rodada, ja foram 3 jogadas do player e duas da maquina
-        #linha fechada
-        for i in range(3):
-            for j in range(1):
-                if matriz_jogo[i][j]==matriz_jogo[i][j+1] and matriz_jogo[i][j]==matriz_jogo[i][2+j]:
-                    vitoria=True
-        
         #coluna fechada
-        for j in range(3):
-            for i in range(1):
-                if matriz_jogo[i][j]==matriz_jogo[i+1][j] and matriz_jogo[i][j]==matriz_jogo[i+2][j]:
-                    vitoria=True
+        elif matriz_jogo[0][0]==matriz_jogo[1][0] and matriz_jogo[0][0]==matriz_jogo[2][0] and matriz_jogo[0][0]!=0:
+            vitoria=True
+        elif matriz_jogo[0][1]==matriz_jogo[1][1] and matriz_jogo[0][1]==matriz_jogo[2][1] and matriz_jogo[0][1]!=0:
+            vitoria=True
+        elif matriz_jogo[0][2]==matriz_jogo[1][2] and matriz_jogo[0][2]==matriz_jogo[2][2] and matriz_jogo[0][2]!=0:
+            vitoria=True
             
         #diagonal principal fechada
-        i=0
-        j=0
-        if matriz_jogo[i][j]==matriz_jogo[i+1][j+1] and matriz_jogo[i][j]==matriz_jogo[i+2][j+2]:
+        elif matriz_jogo[0][0]==matriz_jogo[1][1] and matriz_jogo[0][0]==matriz_jogo[2][2] and matriz_jogo[0][0]!=0:
             vitoria=True
             
         #diagonal secundaria
-        i=0
-        j=0
-        if matriz_jogo[i+2][j]==matriz_jogo[i+1][j+1] and matriz_jogo[i+2][j]==matriz_jogo[i][j+2]:
+        elif matriz_jogo[2][0]==matriz_jogo[1][1] and matriz_jogo[2][0]==matriz_jogo[0][2] and matriz_jogo[2][0]!=0:
             vitoria=True
+        
+        return vitoria
 
-    if vitoria==True:
-        t.goto(-10,0)
-
-        t.write("JOGADOR X VENCEU", align="center", font=("Verdana",15, "normal"))
-
+while True:
+    jogador_A()
+    
+    #conferindo vitoria após jogada do jogador X
+    vencedorA=verificarVitoria()
+    if vencedorA==True:
+        t.goto(0,105)
+        t.write("JOGADOR X VENCEU", align="center", font=("Times New Roman",15, "normal"))
+        break
+    
+    #Caso de dar empate
+    if len(disponiveis)==0:
+        t.goto(0,105)
+        t.write("DEU VELHA",align="center", font=("Times New Roman",15, "normal"))
         break
 
     jogador_B()    
-    #conferindo vitoria
-    if len(disponiveis)<=4: #checando a partir da terceira rodada, ja foram 3 jogadas do player e duas da maquina
-        #linha fechada
-        for i in range(3):
-            for j in range(1):
-                if matriz_jogo[i][j]==matriz_jogo[i][j+1] and matriz_jogo[i][j]==matriz_jogo[i][2+j]:
-                    vitoria=True
-        
-        #coluna fechada
-        for j in range(3):
-            for i in range(1):
-                if matriz_jogo[i][j]==matriz_jogo[i+1][j] and matriz_jogo[i][j]==matriz_jogo[i+2][j]:
-                    vitoria=True
-            
-        #diagonal principal fechada
-        i=0
-        j=0
-        if matriz_jogo[i][j]==matriz_jogo[i+1][j+1] and matriz_jogo[i][j]==matriz_jogo[i+2][j+2]:
-            vitoria=True
-            
-        #diagonal secundaria
-        i=0
-        j=0
-        if matriz_jogo[i+2][j]==matriz_jogo[i+1][j+1] and matriz_jogo[i+2][j]==matriz_jogo[i][j+2]:
-            vitoria=True
-
-    if vitoria==True:
-        t.goto(0,0)
-        t.write("JOGADOR O VENCEU",align="center", font=("Verdana",15, "normal"))
+    #conferindo vitoria após jogada do jogador O
+    vencedorB=verificarVitoria()
+    if vencedorB==True:
+        t.goto(0,105)
+        t.pencolor("#3f0013")
+        t.write("JOGADOR O VENCEU", align="center", font=("Times New Roman",15, "normal"))
         break
+    
 
 turtle.mainloop()
